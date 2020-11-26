@@ -1,0 +1,2 @@
+# prediction_of_cardiovascular_disease
+ Прогноз наличия сердечно-сосудистого заболевания
