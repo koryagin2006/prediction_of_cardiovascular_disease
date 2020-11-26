@@ -32,7 +32,7 @@ app.config.update(
 
 def get_prediction(
         age, gender, height, weight, ap_hi, ap_lo, smoke, alco, active,
-        description, company_profile, benefits
+        # description, company_profile, benefits
 ):
     body = {
         'age': age,
