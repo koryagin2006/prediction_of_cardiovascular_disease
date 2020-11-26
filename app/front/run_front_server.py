@@ -9,7 +9,6 @@ import json
 
 
 class ClientDataForm(FlaskForm):
-
     # description = StringField('Job Description', validators=[DataRequired()])
     # company_profile = StringField('Company Profile', validators=[DataRequired()])
     # benefits = StringField('Benefits', validators=[DataRequired()])
@@ -78,14 +77,34 @@ def predict_form():
     form = ClientDataForm()
     data = dict()
     if request.method == 'POST':
-        data['description'] = request.form.get('description')
-        data['company_profile'] = request.form.get('company_profile')
-        data['benefits'] = request.form.get('benefits')
+        # data['description'] = request.form.get('description')
+        # data['company_profile'] = request.form.get('company_profile')
+        # data['benefits'] = request.form.get('benefits')
+        data['age'] = request.form.get('age')
+        data['gender'] = request.form.get('gender')
+        data['height'] = request.form.get('height')
+        data['weight'] = request.form.get('weight')
+        data['ap_hi'] = request.form.get('ap_hi')
+        data['ap_lo'] = request.form.get('ap_lo')
+        data['smoke'] = request.form.get('smoke')
+        data['alco'] = request.form.get('alco')
+        data['active'] = request.form.get('active')
 
         try:
-            response = str(get_prediction(data['description'],
-                                          data['company_profile'],
-                                          data['benefits']))
+            response = str(get_prediction(
+                # data['description'],
+                # data['company_profile'],
+                # data['benefits'],
+                data['age'],
+                data['gender'],
+                data['height'],
+                data['weight'],
+                data['ap_hi'],
+                data['ap_lo'],
+                data['smoke'],
+                data['alco'],
+                data['active'],
+            ))
             print(response)
         except ConnectionError:
             response = json.dumps({"error": "ConnectionError"})
