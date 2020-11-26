@@ -9,9 +9,19 @@ import json
 
 
 class ClientDataForm(FlaskForm):
-    description = StringField('Job Description', validators=[DataRequired()])
-    company_profile = StringField('Company Profile', validators=[DataRequired()])
-    benefits = StringField('Benefits', validators=[DataRequired()])
+
+    # description = StringField('Job Description', validators=[DataRequired()])
+    # company_profile = StringField('Company Profile', validators=[DataRequired()])
+    # benefits = StringField('Benefits', validators=[DataRequired()])
+    age = StringField('age', validators=[DataRequired()])
+    gender = StringField('gender', validators=[DataRequired()])
+    height = StringField('height', validators=[DataRequired()])
+    weight = StringField('weight', validators=[DataRequired()])
+    ap_hi = StringField('ap_hi', validators=[DataRequired()])
+    ap_lo = StringField('ap_lo', validators=[DataRequired()])
+    smoke = StringField('smoke', validators=[DataRequired()])
+    alco = StringField('alco', validators=[DataRequired()])
+    active = StringField('active', validators=[DataRequired()])
 
 
 app = Flask(__name__)
@@ -21,10 +31,24 @@ app.config.update(
 )
 
 
-def get_prediction(description, company_profile, benefits):
-    body = {'description': description,
-            'company_profile': company_profile,
-            'benefits': benefits}
+def get_prediction(
+        age, gender, height, weight, ap_hi, ap_lo, smoke, alco, active,
+        description, company_profile, benefits
+):
+    body = {
+        'age': age,
+        'gender': gender,
+        'height': height,
+        'weight': weight,
+        'ap_hi': ap_hi,
+        'ap_lo': ap_lo,
+        'smoke': smoke,
+        'alco': alco,
+        'active': active,
+        # 'description': description,
+        # 'company_profile': company_profile,
+        # 'benefits': benefits
+    }
 
     myurl = "http://0.0.0.0:8180/predict"
     req = urllib.request.Request(myurl)
