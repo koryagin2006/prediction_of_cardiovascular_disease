@@ -1,5 +1,3 @@
-import json
-
 from flask import Flask, render_template, redirect, url_for, request
 from flask_wtf import FlaskForm
 from requests.exceptions import ConnectionError
@@ -8,6 +6,7 @@ from wtforms.validators import DataRequired
 
 import urllib.request
 import json
+
 
 class ClientDataForm(FlaskForm):
     description = StringField('Job Description', validators=[DataRequired()])
@@ -21,20 +20,22 @@ app.config.update(
     SECRET_KEY='you-will-never-guess',
 )
 
+
 def get_prediction(description, company_profile, benefits):
     body = {'description': description,
-                            'company_profile': company_profile,
-                            'benefits': benefits}
+            'company_profile': company_profile,
+            'benefits': benefits}
 
     myurl = "http://0.0.0.0:8180/predict"
     req = urllib.request.Request(myurl)
     req.add_header('Content-Type', 'application/json; charset=utf-8')
     jsondata = json.dumps(body)
-    jsondataasbytes = jsondata.encode('utf-8')   # needs to be bytes
+    jsondataasbytes = jsondata.encode('utf-8')  # needs to be bytes
     req.add_header('Content-Length', len(jsondataasbytes))
-    #print (jsondataasbytes)
+    # print (jsondataasbytes)
     response = urllib.request.urlopen(req, jsondataasbytes)
     return json.loads(response.read())['predictions']
+
 
 @app.route("/")
 def index():
@@ -57,11 +58,10 @@ def predict_form():
         data['company_profile'] = request.form.get('company_profile')
         data['benefits'] = request.form.get('benefits')
 
-
         try:
             response = str(get_prediction(data['description'],
-                                      data['company_profile'],
-                                      data['benefits']))
+                                          data['company_profile'],
+                                          data['benefits']))
             print(response)
         except ConnectionError:
             response = json.dumps({"error": "ConnectionError"})
