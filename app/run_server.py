@@ -34,7 +34,6 @@ def load_model(model_path):
     print(model)
 
 
-# modelpath = "/app/app/models/logreg_pipeline.dill"
 modelpath = "/app/app/models/model_dtc.dill"
 load_model(modelpath)
 
@@ -53,14 +52,8 @@ def predict():
     # ensure an image was properly uploaded to our endpoint
     if flask.request.method == "POST":
         age, gender, height, weight, ap_hi, ap_lo, smoke, alco, active = "", "", "", "", "", "", "", "", ""
-        # description, company_profile, benefits = "", "", ""
         request_json = flask.request.get_json()
-        # if request_json["description"]:
-        #     description = request_json['description']
-        # if request_json["company_profile"]:
-        #     company_profile = request_json['company_profile']
-        # if request_json["benefits"]:
-        #     benefits = request_json['benefits']
+        
         if request_json['age']:
             age = request_json['age']
         if request_json['gender']:
@@ -85,9 +78,6 @@ def predict():
             f'smoke={smoke}, alco={alco}, active={active} ')
         try:
             preds = model.predict_proba(pd.DataFrame({
-                # "description": [description],
-                # "company_profile": [company_profile],
-                # "benefits": [benefits],
                 'age': [age],
                 'gender': [gender],
                 'height': [height],
