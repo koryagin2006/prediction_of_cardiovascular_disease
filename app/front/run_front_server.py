@@ -9,9 +9,6 @@ import json
 
 
 class ClientDataForm(FlaskForm):
-    # description = StringField('Job Description', validators=[DataRequired()])
-    # company_profile = StringField('Company Profile', validators=[DataRequired()])
-    # benefits = StringField('Benefits', validators=[DataRequired()])
     age = StringField('age', validators=[DataRequired()])
     gender = StringField('gender', validators=[DataRequired()])
     height = StringField('height', validators=[DataRequired()])
@@ -43,10 +40,7 @@ def get_prediction(
         'ap_lo': ap_lo,
         'smoke': smoke,
         'alco': alco,
-        'active': active,
-        # 'description': description,
-        # 'company_profile': company_profile,
-        # 'benefits': benefits
+        'active': active
     }
 
     myurl = "http://0.0.0.0:8180/predict"
@@ -77,9 +71,6 @@ def predict_form():
     form = ClientDataForm()
     data = dict()
     if request.method == 'POST':
-        # data['description'] = request.form.get('description')
-        # data['company_profile'] = request.form.get('company_profile')
-        # data['benefits'] = request.form.get('benefits')
         data['age'] = request.form.get('age')
         data['gender'] = request.form.get('gender')
         data['height'] = request.form.get('height')
@@ -92,9 +83,6 @@ def predict_form():
 
         try:
             response = str(get_prediction(
-                # data['description'],
-                # data['company_profile'],
-                # data['benefits'],
                 data['age'],
                 data['gender'],
                 data['height'],
